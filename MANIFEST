@@ -1,5 +1,8 @@
-CGI/Thin.pm
 Changes
-MANIFEST
 Makefile.PL
+MANIFEST
 README
+lib/CGI/Thin.pm
+lib/CGI/Thin/Cookies.pm
+t/01_init_thin.t
+t/02_init_cookie.t
