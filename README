@@ -1,0 +1,73 @@
+NAME
+
+    CGI::Thin - A very lightweight Parser for CGI Forms
+
+SYNOPSIS
+
+      use CGI::Thin;
+      use strict;
+      
+      my %cgi_data = &Parse_CGI ();
+
+DESCRIPTION
+
+    This module is a very lightweight parser of CGI forms.  And it has a 
+    special feature that it will return an array if the same key is used
+    twice in the form.  And you can force an array to avoid complications.
+
+    The hash %cgi_data will have all the form data from either a POST or GET form
+    and will also work for "multipart/form-data" forms necessary for uploading files.
+
+USAGE
+
+  Functions
+
+    * `CGI::Thin::Parse_CGI(@keys)'
+        The optional @keys will be used to force arrays to be returned.
+
+        The function also has special features for getting multiple values for a
+        single form key.  For example if we have this form...
+
+          <input type="checkbox" name="color" value="red">red
+          <input type="checkbox" name="color" value="green">green
+          <input type="checkbox" name="color" value="blue">blue
+
+        One of three things can happen.
+
+        1)  The user does not select any color.
+            So $cgi_data{'color'} will not exist.
+        2)  The user selects exactly one color.
+            So $cgi_data{'color'} will be the scalar value selected.
+        3)  The user selects exactly more than one color.
+            So $cgi_data{'color'} will be a reference to an array of the values selected.
+
+        To fix this you could call the parser by giving it a list of keys that you want
+        to force to be arrays.  In this case like...
+
+          use CGI::Thin;
+          my %cgi_data = &Parse_CGI ('color');
+
+        Now it they pick exactly one color, $cgi_data{'color'} will be a reference to
+        an array of the one value selected.  And thus there will be no need for
+        special cases later in the code.
+
+BUGS
+
+  Following is a list of known or reported bugs.
+
+  Fixed
+
+  Pending
+
+SUPPORT
+
+    Visit CGI::Thin's web site at
+    http://www.platypiventures.com/perl/modules/cgi_thin.shtml
+
+AUTHOR
+
+    R. Geoffrey Avery
+    CPAN ID: RGEOFFREY
+    rGeoffrey@PlatypiVentures.com
+    http://www.PlatypiVentures.com/perl
+
